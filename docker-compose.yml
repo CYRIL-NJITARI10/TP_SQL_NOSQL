@@ -1,0 +1,49 @@
+version: '3.8'
+services:
+  postgres:
+    build:
+      context: .
+      dockerfile: Dockerfiles/postgres.Dockerfile
+    container_name: pgadmin_container
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: DBR
+    ports:
+      - "5432:5432"
+    networks:
+      - db-network
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "8080:80"
+    depends_on:
+      - postgres
+    networks:
+      - db-network
+
+  mongo:
+    build:
+      context: .
+      dockerfile: Dockerfiles/mongo.Dockerfile
+    ports:
+      - "27017:27017"
+    networks:
+      - db-network
+
+  cassandra:
+    build:
+      context: .
+      dockerfile: Dockerfiles/cassandra.Dockerfile
+    ports:
+      - "9042:9042"
+    networks:
+      - db-network
+
+networks:
+  db-network:
+    driver: bridge
