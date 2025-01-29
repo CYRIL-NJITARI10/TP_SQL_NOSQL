@@ -6,8 +6,8 @@ services:
       dockerfile: Dockerfiles/postgres.Dockerfile
     container_name: pgadmin_container
     environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
       POSTGRES_DB: DBR
     ports:
       - "5432:5432"
@@ -18,7 +18,7 @@ services:
     image: dpage/pgadmin4:latest
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_DEFAULT_PASSWORD: root
     ports:
       - "8080:80"
     depends_on:
@@ -43,7 +43,8 @@ services:
       - "9042:9042"
     networks:
       - db-network
-
+    environment:
+      - CASSANDRA_START_RPC=true
 networks:
   db-network:
     driver: bridge
