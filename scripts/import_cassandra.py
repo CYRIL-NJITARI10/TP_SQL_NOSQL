@@ -4,7 +4,7 @@ import uuid
 import time
 
 try:
-    cluster = Cluster(['localhost'])
+    cluster = Cluster(['cassandra'], port=9042)
     session = cluster.connect()
     print("Connection to the database successful!")
     session.execute("""
@@ -40,7 +40,7 @@ try:
 
     start_time = time.time()
 
-    with open('../data/usagers-2023.csv', 'r') as file:
+    with open('/app/data/usagers-2023.csv', 'r') as file:
         reader = csv.reader(file, delimiter=';')
         next(reader)
         for row in reader:

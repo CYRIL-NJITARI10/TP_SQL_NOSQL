@@ -2,13 +2,15 @@ import csv
 import psycopg2
 import time
 
+
 conn = psycopg2.connect(
     dbname="DBR",
-    user="postgres",
+    user="root",
     password="root",
-    host="localhost",
+    host="postgres",
     port="5432"
 )
+
 print("Connection to the database successful!")
 cursor = conn.cursor()
 
@@ -36,7 +38,7 @@ CREATE TABLE IF NOT EXISTS data (
 conn.commit()
 print("Creation of table data successful!")
 start_time = time.time()
-with open('../data/usagers-2023.csv', 'r') as file:
+with open('/app/data/usagers-2023.csv', 'r') as file:
     reader = csv.reader(file, delimiter=';')
     next(reader)
     for row in reader:

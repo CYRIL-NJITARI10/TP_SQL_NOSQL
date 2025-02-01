@@ -1,10 +1,11 @@
 version: '3.8'
+
 services:
   postgres:
     build:
       context: .
       dockerfile: Dockerfiles/postgres.Dockerfile
-    container_name: pgadmin_container
+    container_name: postgres_container
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: root
@@ -30,6 +31,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfiles/mongo.Dockerfile
+    container_name: mongo_container
     ports:
       - "27017:27017"
     networks:
@@ -39,12 +41,26 @@ services:
     build:
       context: .
       dockerfile: Dockerfiles/cassandra.Dockerfile
+    container_name: cassandra_container 
     ports:
       - "9042:9042"
     networks:
       - db-network
     environment:
       - CASSANDRA_START_RPC=true
+
+  python-script:
+    build:
+      context: .
+      dockerfile: Dockerfiles/python.Dockerfile
+    container_name: python_script_container
+    volumes:
+      - ./data:/app/data
+    depends_on:
+      - mongo
+    networks:
+      - db-network
+
 networks:
   db-network:
     driver: bridge
