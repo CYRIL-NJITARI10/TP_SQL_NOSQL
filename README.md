@@ -17,7 +17,7 @@ Assurez-vous d'avoir les éléments suivants installés:
 ## Installation
 ### 1. Cloner le dépôt
 ```sh
-git clone https://github.com/votre-repo.git
+git clone https://github.com/CYRIL-NJITARI10/TP_SQL_NOSQL.git
 cd path-jusqu-au-dossier du projet
 ```
 
